@@ -1,0 +1,29 @@
+#ifndef COMPONENTES_H_INCLUDED
+#define COMPONENTES_H_INCLUDED
+#include <windows.h>
+#include "../Biblioteca/varAmbiente.h"
+#include "../Biblioteca/CBibliotecaDeComponentes.h"
+#include "../Biblioteca/CFuncaoComponentes.h"
+
+CEstilos(LPARAM cor){
+	// Estilos para seus componentes
+}
+
+CComponentesGraficos(){
+	//componentes a aparecer na tela
+}
+
+CComandos(WPARAM id){
+	switch(id){
+		case 1:{
+			break;
+		}
+		case 2:{
+			break;
+		}
+		default:{
+			break;
+		}
+	}
+}
+#endif

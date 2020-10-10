@@ -1,0 +1,86 @@
+﻿#include <windows.h>
+#include "../Biblioteca/varAmbiente.h"
+
+int idJanela=-1,cont;
+
+LRESULT CALLBACK newJanela(HWND,UINT,WPARAM,LPARAM);
+
+WPARAM CJanelaN(const char titulo[], float pos_x, float pos_y, float altura, float largura){
+	if(idJanela!=-1)return 0;
+	ShowWindow(GetConsoleWindow(),0);
+	jan.cbSize = sizeof(jan);
+	jan.cbClsExtra = 0;
+	jan.cbWndExtra = 0;
+	jan.hInstance = window;
+	jan.hCursor = LoadCursor(NULL, IDC_ARROW);
+	jan.hIconSm = LoadIcon(NULL, IDI_APPLICATION);
+	jan.hIcon = LoadIcon(NULL, IDI_APPLICATION);
+	jan.hbrBackground = (HBRUSH) COLOR_BACKGROUND;
+	jan.lpfnWndProc = newJanela;
+	jan.lpszClassName = titulo;
+	jan.lpszMenuName = NULL;
+	jan.style = CS_HREDRAW|CS_VREDRAW;
+	UnregisterClass(titulo,window);
+	if(!RegisterClassEx(&jan)){
+		MessageBox(NULL,"Nao foi possivel registrar a classe!","Erro",0x10);
+		exit(0);
+	}
+	idJanela=janelaNula(); 
+	mapJanelas[idJanela] = CreateWindowEx(0,titulo,titulo,WS_OVERLAPPED|WS_MINIMIZEBOX|WS_SYSMENU,pos_x,pos_y,largura,altura,NULL,NULL,window,NULL);
+	ShowWindow(mapJanelas[idJanela],1);
+	while(GetMessage(&mensage,NULL,0,0)){
+		TranslateMessage(&mensage);
+		DispatchMessage(&mensage);
+	}
+	return mensage.wParam;
+}
+
+LRESULT CALLBACK newJanela(HWND hwnd, UINT inteiro, WPARAM wpa, LPARAM lpa){
+	switch(inteiro){
+		case WM_CREATE:{
+			hand = hwnd;
+			break;
+		}
+		case WM_COMMAND:{
+			break;
+		}
+		case WM_CTLCOLORSTATIC:{
+			wpara = wpa;
+			lpara = lpa;
+			
+			break;
+		}
+		case WM_DESTROY:{
+			int i=0;
+			for(i=0;i<400;i++)
+				hcomp[idJanela1][i] = NULL;
+			idJanela=-1;
+			PostQuitMessage(0);
+			break;
+		}
+		case WM_TIMER:{
+			SendMessage(hcomp[idJanela1][idBarra],PBM_STEPIT,0,0);
+			cont++;
+			if(cont == timeBarr){
+				KillTimer(hwnd,(intptr_t)NULL);
+			}
+			break;
+		}
+		case WM_ERASEBKGND:{
+			HDC hdc = (HDC) wpa; 
+			RECT rc;
+		    	GetClientRect(hwnd, &rc); 
+			HBRUSH color = CreateSolidBrush(colr);  
+		    	FillRect(hdc, &rc, color);
+			break;
+		}
+		case WM_HSCROLL:{
+			CComplementaAtualizaS();
+			break;
+		}
+		default:{
+			DefWindowProc(hwnd,inteiro,wpa,lpa);
+			break;
+		}
+	}
+}

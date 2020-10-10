@@ -1,0 +1,4 @@
+URL_BANCO=localhost    
+USUARIO_NOME=root   
+USUARIO_SENHA=  
+NOME_BANCO=museu
